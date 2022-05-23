@@ -44,22 +44,24 @@
     <br>
     <br>
     <div class="footer">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <p class="alert-danger">
+                        {{message}}
+                    </p>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
     <p>اکانت نداری؟ <a href="#" class="signupbtn">الان ثبت نام کن!</a></p>
     </div>
+
+    
   </form>
 
 
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-                <li>
-                    {{message}}
-                </li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-    {% endwith %}
 
 
 
