@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static' , filename = 'css/signup.css') }}">
+{% endblock %}
+
+
+{% block body %}
+
+
+    <form method="post">
+
+        {{ form.csrf_token }}
+        
+        {{ form.username }}
+        <br>
+
+        {{form.password}}
+        <br>
+        <button type="submit">
+            بیا
+        </button>        
+
+    </form>
+
+{% endblock %}
