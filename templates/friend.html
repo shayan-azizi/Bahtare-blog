@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+    <link rel="stylesheet" href="{{ url_for('static' , filename = 'css/friend.css') }}"> 
+    <!-- اقای محترم امیدوارم عصر بهاری خوبی داشته باشید. اینجوری فایلا رو سرو کنید -->
+    <title>بهتره</title>
+{% endblock %}
+
+
+{% block body %}
+
+    <div class="topnav">
+        <a class="active" href="#home"><span>ب</span>هتره</a>
+        <a href="html/projects.html" target="_blank">چت گاه</a>
+        <a href="html/blog.html">اخبار آپدیت ها</a>
+        <a href="#about">درباره ما</a>
+    </div>
+
+    <div class="header">
+        <h2>بلاگ این دوستمون</h2>
+      </div>
+
+    <div class="row">
+        <div class="leftcolumn">
+
+          <div class="card">
+            <h2>تایتل پست</h2>
+
+            <h5>دیسکریپشن و تاریخ</h5>
+            <div class="fakeimg" style="height:200px;">تصویر</div>
+
+            <p>چرت پرت های درون پست</p>
+
+          </div>
+
+          <div class="card">
+
+            
+            <h2>تایتل پست</h2>
+            <h5>دیسکریپشن و تاریخ</h5>
+            <div class="fakeimg" style="height:200px;">تصویر</div>
+            <p>چرت پرت های درون پست</p>
+          </div>
+        </div>
+        <div class="rightcolumn">
+          <div class="card">
+            <h2>در مورد این دوست</h2>
+            <div class="fakeimg" style="height:100px;">تصویر</div>
+            <p>چرت و پرت</p>
+          </div>
+          <div class="card">
+            <h3>پست های محبوب</h3>
+            <div class="fakeimg">تصویر</div><br>
+            <div class="fakeimg">تصویر</div><br>
+            <div class="fakeimg">تصویر</div>
+          </div>
+          <div class="card">
+            <h3>طرف رو دنبال کن</h3>
+            <p>کسمیبنمنت سس یبتن</p>
+          </div>
+        </div>
+        
+      </div>
+      
+      <div class="footer">
+
+        <h2>تمامی حقوق برای شرکت امویان محفوظه ! دوستان این پروژه کلوز سورسه</h2>
+      </div>
+
+    
+
+{% endblock %}
