@@ -11,18 +11,26 @@ db = SQLAlchemy(app)
 
 ################
 class User(db.Model , UserMixin):
-    pass
 
+    _id =      db.Column( db.Integer , primary_key = True)
+    username = db.Column(db.String(100) , unique= True , nullable = False)
+    password = db.Column(db.String(1000)  , nullable = False)
+    html_bio = db.Column(db.String())
+
+
+
+    def __init__(self, username : str , password : str):
+        self.username = username
+        self.password = password
+        
 
 
 #################
 
 
-
 @app.route("/")
 def index():
     return render_template("index.html")
-
 
 
 
