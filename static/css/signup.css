@@ -118,3 +118,8 @@ body {
     float:right;
     user-select:none;
 }
+
+.alert-danger {
+    color: red;
+
+}
