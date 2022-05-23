@@ -9,20 +9,29 @@
 {% block body %}
 
 
-    <form method="post">
-
-        {{ form.csrf_token }}
-        
-        {{ form.username }}
-        <br>
-
-        {{form.password}}
-        <br>
-        <button type="submit">
-            بیا
-        </button>        
-
-    </form>
+    <div class="card">
+        <form>
+            <p class="header">
+                ثبت نام
+            </p>
+            <p class="cont">یوزرنیم خود را وارد کنید: </p>
+            <input type="text">
+            <br>
+            <p class="cont">نام خود را وارد کنید: </p>
+            <input type="text">
+            <br>
+            <p class="cont">نام خانوادگی خود را وارد کنید: </p>
+            <input type="text">
+            <br>
+            <p class="cont">پسوورد خود را وارد کنید: </p>
+            <input type="password">
+            
+            <br>
+            <button type="submit"class="btn" role="button">
+                ثبت نام
+            </button>
+        </form>
+    </div>
 
     {% with messages = get_flashed_messages() %}
         {% if messages %}
