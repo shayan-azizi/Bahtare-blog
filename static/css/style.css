@@ -32,3 +32,15 @@
     color: white;
     
 }
+
+.footer {
+    padding: 20px;
+    border-radius: 20px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    background: #ddd;
+    margin-top: 20px;
+}
+
+.footer .c-right {
+    text-align: right;
+}
