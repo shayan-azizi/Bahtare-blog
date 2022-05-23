@@ -1,6 +1,6 @@
-from flask import Flask, flash, render_template , request , redirect, url_for
+from flask import Flask, flash, jsonify, render_template , request , redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin
+from flask_login import UserMixin , login_user  , LoginManager , current_user
 from flask_wtf.form import FlaskForm
 from wtforms import StringField , PasswordField
 
@@ -11,6 +11,8 @@ app.secret_key = "this is password pls don't steal 4269"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///sheet.sqlite3"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+login_manager = LoginManager()
+login_manager.init_app(app)
 
 
 ##MODELS
@@ -33,7 +35,9 @@ class User(db.Model , UserMixin):
 
     def __repr__(self):
         return self.username
-        
+    
+    def get_id(self):
+        return self._id
 
 
 ####FORMS
@@ -46,6 +50,11 @@ class SignupForm(FlaskForm):
     last_name = StringField("last_name")
 
 
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.filter_by(_id = user_id).first()
 
 ###VIEWS
 
@@ -75,6 +84,7 @@ def signup():
                     user = User(username=username , password=password , name=name , last_name=last_name)
                     db.session.add(user)
                     db.session.commit()
+                    login_user(user)
                     return redirect("/")
         
         else:
@@ -86,6 +96,14 @@ def signup():
     if request.method == "GET":
         form = SignupForm()
         return render_template("signup.html" , form=form)
+
+
+@app.route("/has_logged_in")
+def has_logged_in():
+    return jsonify({
+        "is_authenticated" : current_user.is_authenticated
+    })
+    
 
 
 
