@@ -42,4 +42,23 @@
         </ul>
         {% endif %}
     {% endwith %}
+
+    
+    <script>
+        let csrf_token = "{{ csrf_token() }}";
+        let username = "";
+        $.ajax({
+            type : "POST",
+            url : "{{ url_for('validation_endpoint') }}",
+            headers : {
+                "X-CSRFToken" : csrf_token
+            },
+            data : {
+                "username" : username,
+            }
+            
+        })
+
+
+    </script>
 {% endblock %}

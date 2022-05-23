@@ -92,10 +92,10 @@ def signup():
         return redirect(url_for("signup"))
 
 
-
     if request.method == "GET":
         form = SignupForm()
         return render_template("signup.html" , form=form)
+
 
 
 @app.route("/has_logged_in")
@@ -103,6 +103,12 @@ def has_logged_in():
     return jsonify({
         "is_authenticated" : current_user.is_authenticated
     })
+    
+
+
+@app.route("/validation123" , methods = ["POST"])
+def validation_endpoint():
+    print(request)
     
 
 
