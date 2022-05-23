@@ -3,6 +3,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin , login_user  , LoginManager , current_user
 from flask_wtf.form import FlaskForm
 from wtforms import StringField , PasswordField
+from passlib.hash import sha256_crypt
+
 
 
 
@@ -26,7 +28,7 @@ class User(db.Model , UserMixin):
     last_name   = db.Column(db.String(100) , nullable = True)
 
 
-    def __init__(self, username : str , password : str , html_bio = None , name = None , last_name = None):
+    def __init__(self, username : str , password  , html_bio = None , name = None , last_name = None):
         self.username = username
         self.password = password
         self.html_bio = html_bio
@@ -44,7 +46,7 @@ class User(db.Model , UserMixin):
 
 class SignupForm(FlaskForm):
     
-    username =  StringField("username")
+    username =  StringField("username" )
     password =  PasswordField("password")
     name   = StringField("name")
     last_name = StringField("last_name")
@@ -81,6 +83,7 @@ def signup():
                 else:
                     if password == False:
                         password = ""
+                    password = sha256_crypt.encrypt(password)
                     user = User(username=username , password=password , name=name , last_name=last_name)
                     db.session.add(user)
                     db.session.commit()
@@ -92,10 +95,10 @@ def signup():
         return redirect(url_for("signup"))
 
 
-
     if request.method == "GET":
         form = SignupForm()
         return render_template("signup.html" , form=form)
+
 
 
 @app.route("/has_logged_in")
@@ -106,10 +109,15 @@ def has_logged_in():
     
 
 
+@app.route("/validation123" , methods = ["POST"])
+def validation_endpoint():
+    print(request)
+    
+
+
 
 if __name__ == "__main__":
     db.create_all()
     app.run(debug=True)
-
 
 
