@@ -4,6 +4,7 @@ from flask_login import UserMixin , login_user  , LoginManager , current_user
 from flask_wtf.form import FlaskForm
 from wtforms import StringField , PasswordField
 from passlib.hash import sha256_crypt
+from flask_wtf.csrf import CSRFProtect
 
 
 
@@ -15,6 +16,8 @@ app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+csrf = CSRFProtect(app)
+csrf.init_app(app)
 
 
 ##MODELS
@@ -111,7 +114,20 @@ def has_logged_in():
 
 @app.route("/validation123" , methods = ["POST"])
 def validation_endpoint():
-    print(request)
+    username = request.form.get("username")
+    password = request.form.get("password")
+    error = ""
+    if username == "":
+        error = "اقای محترم چرا خالی؟"
+    if len(username) > 100:
+        error = "زیادی بلنده اسکل"
+
+    if User.query.filter_by(username = username).first() != None:
+        error = "تکراریه اقای مترحم"
+
+    return jsonify({
+        "error" : error
+    })
     
 
 
