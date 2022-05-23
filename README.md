@@ -1,3 +1,3 @@
-# Bahtare-blog \n
-Sophisticated Blog written in flask \n
+# Bahtare-blog <br>
+Sophisticated Blog written in flask <br>
 powered by ai and machine learning and deep learning
