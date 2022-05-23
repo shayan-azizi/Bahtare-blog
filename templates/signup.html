@@ -8,14 +8,12 @@
 
 {% block body %}
 
-
     <div class="card">
         <form>
             <p class="header">
                 ثبت نام
             </p>
             <p class="cont">یوزرنیم خود را وارد کنید: </p>
-            <input type="text">
             <br>
             <p class="cont">نام خود را وارد کنید: </p>
             <input type="text">
@@ -25,13 +23,15 @@
             <br>
             <p class="cont">پسوورد خود را وارد کنید: </p>
             <input type="password">
-            
             <br>
             <button type="submit"class="btn" role="button">
                 ثبت نام
             </button>
-        </form>
-    </div>
+        </form> 
+    </div> 
+
+
+    
 
 
     {% with messages = get_flashed_messages() %}
@@ -46,22 +46,6 @@
         {% endif %}
     {% endwith %}
 
+
     
-    <script>
-        let csrf_token = "{{ csrf_token() }}";
-        let username = "";
-        $.ajax({
-            type : "POST",
-            url : "{{ url_for('validation_endpoint') }}",
-            headers : {
-                "X-CSRFToken" : csrf_token
-            },
-            data : {
-                "username" : username,
-            }
-            
-        })
-
-
-    </script>
 {% endblock %}
