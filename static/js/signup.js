@@ -10,6 +10,13 @@ function activeSignIn () {
     let submitBtn = document.getElementsByClassName ("submitbtn")
     submitBtn.value = "ورود"
 
+
+    let doYouHaveAcc = document.getElementsByClassName("signupbtn")
+    doYouHaveAcc.value = "الان ثبت نام کن!"
+
+    let parentDoYouHaveAcc = document.getElementById("parent-acc")
+    parentDoYouHaveAcc.value = "اکانت نداری؟"
+
 }
 
 function activeSignUp () {
@@ -19,6 +26,16 @@ function activeSignUp () {
     signInButton.classList.add("unactive")
     signUpButton.classList.remove("unactive")
     signUpButton.classList.add("active")
+
+    let submitBtn = document.getElementsByClassName ("submitbtn")
+    submitBtn.value = "ثبت نام"
+
+
+    let doYouHaveAcc = document.getElementsByClassName("signupbtn")
+    doYouHaveAcc.value = "الان ورود کن!"
+
+    let parentDoYouHaveAcc = document.getElementById("parent-acc")
+    parentDoYouHaveAcc.value = "اکانت داری؟"
 
 }
 
