@@ -80,21 +80,30 @@ def signup():
         if username:
             if len(username) >= 100:
                 flash("یوزرنیم باید کمتر از 100 کاراکتر باشد جناپ")
+            elif " " in username:
+                flash ("آقای محترم اسپیس نذارید توی نام کاربری")
             else:
                 if  User.query.filter_by(username=username).first() != None:
                     flash("یوزرنیم تکراری است اقای محترم")
                 else:
-                    if password == False:
-                        password = ""
-                    password = sha256_crypt.encrypt(password)
-                    user = User(username=username , password=password , name=name , last_name=last_name)
-                    db.session.add(user)
-                    db.session.commit()
-                    login_user(user)
-                    return redirect("/")
-        
+                    if not password == False and len(password) >= 8:
+                        
+                        password = sha256_crypt.encrypt(password)
+                        user = User(username=username , password=password , name=name , last_name=last_name)
+                        db.session.add(user)
+                        db.session.commit()
+                        login_user(user)
+                        return redirect("/") 
+                    
+                    elif password == False:
+                        flash ("آقای محترم رمز خالی نباشه وگرنه")
+                    
+                    elif len(password) <= 8:
+                        flash("آقای محترم رمزتون باید بیشتر از 8 کارکتر باشه")
         else:
             flash("اقای محرتم یوزرنیم خالی نباشه وگرنه")
+            
+        
         return redirect(url_for("signup"))
 
 
