@@ -12,10 +12,10 @@
 <form  class="form" method="post">
   {{form.csrf_token}}
     <div class="top">
-      <h1>فرم ورود</h1>
+      <h1>فرم ثبت نام</h1>
       <br>
-      <a href="#" class="active">ورود</a>
-      <a href="#" class="unactive">ثبت نام</a>
+      <a href="#" class="active" id = "s-up" onclick="activeSignUp()">ثبت نام</a>
+      <a href="#" class="unactive" id = "s-in" onclick="activeSignIn()">ورود </a>
     </div>
     <br>
    <br>
@@ -24,10 +24,10 @@
       <!-- <input type="text" id = "username" name = "username" value = ""class="inputs" placeholder="نام کاربری"> -->
       {{ form.username(placeholder = "نام کاربری", **{"class" : "inputs" , "onchange" : "validate();"}) }}
       <!-- <input type="text" id = "name" name = "name" class = "inputs" value="" placeholder="نام"> -->
-      {{ form.name(placeholder = "نام", **{"class" : "inputs"}) }}
+      {{ form.name(placeholder = "نام", **{"class" : "inputs", "id" : "name"}) }}
 
       <!-- <input type="text" id = "fullname" name = "fullname" class="inputs" value ="" placeholder="نام خانوادگی"> -->
-      {{ form.last_name(placeholder = "نام خانوادگی", **{"class" : "inputs"}) }}
+      {{ form.last_name(placeholder = "نام خانوادگی", **{"class" : "inputs", "id" : "fname"}) }}
 
       <!-- <input type="password" id = "password" name = "password" value="" class="inputs" placeholder="رمز"> -->
       {{ form.password(placeholder = "رمز", **{"class" : "inputs", "type" : "password" , "onchange" : "validate();"}) }}
@@ -39,7 +39,7 @@
     <br>
     <br>
     <div class="submitdiv">
-      <input type="submit" value="ورود" class="submitbtn">
+      <input type="submit" value="ثبت نام" class="submitbtn">
     </div>
     <br>
     <br>
@@ -55,49 +55,16 @@
             </ul>
             {% endif %}
         {% endwith %}
-    <p>اکانت نداری؟ <a href="#" class="signupbtn">الان ثبت نام کن!</a></p>
+    <p id = "parent-acc">اکانت داری؟ <a href="#" class="signupbtn">الان ورود کن!</a></p>
     </div>
 
     
   </form>
 
 
+    <script src="{{ url_for('static' , filename = 'js/signup.js') }}"> </script>
 
 
-
-
-        <script>
-
-          function validate(){
-            let csrf_token = "{{ csrf_token() }}";
-            let username = document.getElementById("username").value;
-            let password = document.getElementById("password").value; 
-
-
-             $.ajax({
-                  
-                   type : "POST",
-                   headers : {
-                     "X-CSRFToken" : csrf_token,
-                   },
-                   data : {
-                     "username" : username,
-                     "password" : password,
-                   },
-                   url : "{{ url_for('validation_endpoint') }}",
-                   success : function(response){
-                        error = response["error"]
-                        
-                        if (error != ""){
-                          console.log(error);
-                        }
-                   }
-                  
-                  
-               });
-          }
-      
-        </script>
 
 
 

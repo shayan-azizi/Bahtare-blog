@@ -121,5 +121,6 @@ body {
 
 .alert-danger {
     color: red;
-
+    margin-left: 5px;
+    
 }
