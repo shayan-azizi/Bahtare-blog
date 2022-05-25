@@ -13,8 +13,17 @@
     margin-bottom: 10px;
 }
 
-.topnav a {
+.topnav .bruh {
     float: right;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 16.5px;
+}
+
+.sign-up {
+    float: left;
     color: #f2f2f2;
     text-align: center;
     padding: 14px 16px;
@@ -25,11 +34,20 @@
 .topnav a:hover {
     background-color: #ddd;
     color: black;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 16.5px;
 }
 
 .topnav a.active {
-    background-color: blue;
+    background-color: rgb(23, 23, 163);
     color: white;
+    float: right;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 16.5px;
     
 }
 
