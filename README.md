@@ -1,4 +1,4 @@
 # Bahtare-blog <br>
 
-A blog written by Flask <br>
-Follow your friends and share related content with each other
+A blog written with Flask <br>
+Follow your friends and share unrelated content with each other
