@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block head %}
+
+    <link rel="stylesheet" href="{{ url_for('static' , filename = 'css/404.css') }}"> 
+    <title>بهتره</title>
+{% endblock %}
+
+
+{% block body %}
+
+    {% include 'navbar.html' %}
+
+    <div class="mars"></div>
+    <p class="logo-404">405</p>
+    <img src="https://assets.codepen.io/1538474/meteor.svg" class="meteor" />
+    <p class="title">ای بابا!</p>
+    <p class="subtitle">
+        آقای محترم!<br />به نظر میاد این سایت برای شما <b>جیز</b> میباشد! لطفا به صفحه اصلی برگردین!
+    </p>
+    <div align="center">
+        <a class="btn-back" href="#">برگشتن به صفحه اصلی</a>
+    </div>
+    <img src="https://assets.codepen.io/1538474/astronaut.svg" class="astronaut" />
+    <img src="https://assets.codepen.io/1538474/spaceship.svg" class="spaceship" />
+
+    
+
+{% endblock %}

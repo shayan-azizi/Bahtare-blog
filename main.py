@@ -146,6 +146,10 @@ def page_not_found (e):
     return render_template("404.html"), 404
     
     
+@app.errorhandler(405)
+def page_not_found (e):
+    return render_template("405.html"), 405
+    
 
 if __name__ == "__main__":
     db.create_all()
