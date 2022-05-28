@@ -1,22 +1,63 @@
 {% extends 'base.html' %}
 
 
-{% block header %}
-    <title>
-        لاگین
-    </title>
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static' , filename = 'css/signup.css') }}">
 {% endblock %}
 
+
 {% block body %}
-    <form method="post">
-        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
-
-        <input type="text" name="username" id="username" value="" placeholder="USERNAME : " required>
-
-        <input type="password" name="password" id="password" value="" placeholder="PASSWORD" required>
 
 
+<form  class="form" method="post">
+  
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
 
-    </form>
+    <div class="top">
+      <h1>فرم ورود</h1>
+      <br>
+
+    </div>
+
+    <div class="data">
+                <input class="inputs" type="text" name="username" id="username" value="" placeholder="نام کاربری " required>
+
+        <input class = "inputs" type="password" name="password" id="password" value="" placeholder="رمز" required>
+
+      <br>
+
+    </div>
+    <br>
+    <br>
+    <div class="submitdiv">
+      <input type="submit" value="ورود" class="submitbtn">
+    </div>
+    <br>
+    <br>
+    <div class="footer">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <p class="alert-danger">
+                        {{message}}
+                    </p>
+                {% endfor %}
+            </ul>
+            {% endif %}
+        {% endwith %}
+    <p id = "parent-acc">اکانت نداری؟ <a href="#" class="signupbtn">الان ثبت نام کن!</a></p>
+    </div>
+
+    
+  </form>
+
+
+    <script src="{{ url_for('static' , filename = 'js/signup.js') }}"> </script>
+
+
+
+
+
 
 {% endblock %}
