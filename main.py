@@ -4,7 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin , login_user  , LoginManager , current_user
 from passlib.hash import sha256_crypt
 from flask_wtf.csrf import CSRFProtect
-
+import os
+from flask import send_from_directory
 
 
 
@@ -17,6 +18,7 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 csrf = CSRFProtect(app)
 csrf.init_app(app)
+
 
 
 ##MODELS
@@ -110,14 +112,8 @@ def login():
         password = request.form.get("password" , False)
 
 
-
-
     elif request.method == "GET":
         return render_template("login.html")
-
-
-
-
 
 
 
@@ -157,6 +153,13 @@ def page_not_found (e):
 def page_not_found (e):
     return render_template("405.html"), 405
     
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
 
 if __name__ == "__main__":
     db.create_all()
