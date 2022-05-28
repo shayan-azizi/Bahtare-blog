@@ -2,8 +2,6 @@ from datetime import datetime
 from flask import Flask, flash, jsonify, render_template , request , redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin , login_user  , LoginManager , current_user
-from flask_wtf.form import FlaskForm
-from wtforms import StringField , PasswordField
 from passlib.hash import sha256_crypt
 from flask_wtf.csrf import CSRFProtect
 
@@ -45,16 +43,6 @@ class User(db.Model , UserMixin):
     
     def get_id(self):
         return self._id
-
-
-####FORMS
-
-class SignupForm(FlaskForm):
-    
-    username =  StringField("username" )
-    password =  PasswordField("password")
-    name   = StringField("name")
-    last_name = StringField("last_name")
 
 
 
@@ -108,10 +96,29 @@ def signup():
         
         return redirect(url_for("signup"))
 
-
     if request.method == "GET":
-        form = SignupForm()
-        return render_template("signup.html" , form=form)
+        return render_template("signup.html")
+
+
+@app.route("/login" , methods= ["GET" , "POST"])
+def login():
+    
+
+    if request.method == "POST":
+        
+        username = request.form.get("username" , False)
+        password = request.form.get("password" , False)
+
+
+
+
+    elif request.method == "GET":
+        return render_template("login.html")
+
+
+
+
+
 
 
 
@@ -154,5 +161,4 @@ def page_not_found (e):
 if __name__ == "__main__":
     db.create_all()
     app.run(debug=True)
-
 

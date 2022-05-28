@@ -10,7 +10,9 @@
 
 
 <form  class="form" method="post">
-  {{form.csrf_token}}
+  
+  <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
     <div class="top">
       <h1>فرم ثبت نام</h1>
       <br>
@@ -23,7 +25,15 @@
 
       {{ form.last_name(placeholder = "نام خانوادگی", **{"class" : "inputs", "id" : "fname"}) }}
 
-      {{ form.password(placeholder = "رمز", **{"class" : "inputs", "type" : "password" , "onchange" : "validate();"}) }}
+      {{ form.password(placeholder = "رمز", **{ "class" : "inputs", "type" : "password" , "onchange" : "validate();"}) }}
+      
+      <input class="inputs" id="username" name="username" onchange="validate();" placeholder="نام کاربری" type="text" value="">
+
+      <input class="inputs" id="name" name="name" placeholder="نام" type="text" value="">
+
+      <input class="inputs" id="fname" name="last_name" placeholder="نام خانوادگی" type="text" value="">
+
+      <input class="inputs" id="password" name="password" onchange="validate();" placeholder="رمز" type="password" value="">
 
       <br>
 
