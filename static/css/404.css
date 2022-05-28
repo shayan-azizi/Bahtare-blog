@@ -44,18 +44,12 @@
     
 }
 @import url('https://fonts.googleapis.com/css?family=Nunito:400,600,700');
-$nunito-font: 'Nunito', sans-serif;
 
-// mixins
-@mixin breakpoint($point) {
-    @if $point==mobile {
-        @media (max-width: 480px) and (min-width: 320px) {
-            @content ;
-        }
-    }
-}
 
-// keyrames
+
+
+
+
 @keyframes floating {
     from { transform: translateY(0px); }
     65%  { transform: translateY(15px); }
@@ -96,9 +90,7 @@ body{
   top: 16vmin;
   width: 30vmin;
 
-  @include breakpoint(mobile){
-    top: 45vmin;
-  }
+
 }
 
 .meteor{
@@ -109,20 +101,18 @@ body{
 
 .title{
   color: white;
-  font-family: $nunito-font;
+  font-family: nunito-font;
   font-weight: 600;
   text-align: center;
   font-size: 5vmin;
   margin-top: 31vmin;
 
-  @include breakpoint(mobile){
-    margin-top: 65vmin;
-  }
+  
 }
 
 .subtitle{
   color: white;
-  font-family: $nunito-font;
+  font-family: nunito-font;
   font-weight: 400;
   text-align: center;
   font-size: 3.5vmin;
@@ -130,23 +120,17 @@ body{
   margin-bottom: 9vmin;
 }
 
+
 .btn-back{
   border: 1px solid white;
   color: white;
   height: 5vmin;
   padding: 12px;
-  font-family: $nunito-font;
+  font-family: nunito-font;
   text-decoration: none;
 	border-radius: 5px;
 
-  &:hover{
-    background-color: white;
-    color: #4D007D;
-  }
 
-  @include breakpoint(mobile){
-    font-size: 3.5vmin;
-  }
 }
 
 .astronaut{
@@ -156,9 +140,6 @@ body{
   height: 30vmin;
 	animation: floating 3s infinite ease-in-out;
 
-  @include breakpoint(mobile){
-    top: 2vmin;
-  }
 }
 
 .spaceship{
@@ -166,9 +147,6 @@ body{
   bottom: 15vmin;
   right: 24vmin;
 
-  @include breakpoint(mobile){
-    width: 45vmin;
-    bottom: 18vmin;
-  }
+  
 }
 
