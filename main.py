@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask import Flask, flash, jsonify, render_template , request , redirect, url_for
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin , login_user  , LoginManager , current_user
@@ -29,6 +30,7 @@ class User(db.Model , UserMixin):
     html_bio    = db.Column(db.Text , nullable = True)
     name        = db.Column(db.String(100) , nullable = True)
     last_name   = db.Column(db.String(100) , nullable = True)
+    date_joinde = db.Column(db.DateTime , default= datetime.utcnow)
 
 
     def __init__(self, username : str , password  , html_bio = None , name = None , last_name = None):
@@ -138,6 +140,7 @@ def validation_endpoint():
         "error" : error
     })
 
+#errors ??
 @app.errorhandler(404)
 def page_not_found (e):
     return render_template("404.html"), 404
