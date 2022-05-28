@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+
+{% block header %}
+    <title>
+        لاگین
+    </title>
+{% endblock %}
+
+{% block body %}
+    <form method="post">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}"/>
+
+        <input type="text" name="username" id="username" value="" placeholder="USERNAME : " required>
+
+        <input type="password" name="password" id="password" value="" placeholder="PASSWORD" required>
+
+
+
+    </form>
+
+{% endblock %}
