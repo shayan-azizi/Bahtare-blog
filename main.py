@@ -97,7 +97,7 @@ def signup():
                         login_user(user)
                         return redirect("/") 
                     
-                    elif password == False:
+                    if password == False:
                         flash ("آقای محترم رمز خالی نباشه وگرنه")
                     
                     elif len(password) <= 8:
