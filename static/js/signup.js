@@ -1,10 +1,15 @@
 function validate(){
-    let csrf_token = "{{ csrf_token() }}";
+
+
+    let csrf_token = document.getElementsByName("csrf_token")[0].value;
+
+
+
     let username = document.getElementById("username").value;
     let password = document.getElementById("password").value; 
 
-     $.ajax({
-          
+      $.ajax({
+            
            type : "POST",
            headers : {
              "X-CSRFToken" : csrf_token,
@@ -13,13 +18,23 @@ function validate(){
              "username" : username,
              "password" : password,
            },
-           url : "{{ url_for('validation_endpoint') }}",
+           url : "/validation123",
            success : function(response){
-                error = response["error"]
                 
-                if (error != ""){
-                  console.log(error);
-                }
+
+                username_error = response["username_error"];
+                password_error = response["password_error"];
+
+                document.getElementById("username_error").innerHTML = username_error;
+                
+
+                
+                document.getElementById("password_error").innerHTML = password_error;
+                
+                
+                
+                
+
            }
 
        });
