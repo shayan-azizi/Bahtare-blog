@@ -27,7 +27,6 @@ class User(db.Model , UserMixin):
 
     _id         = db.Column( db.Integer , primary_key = True)
     username    = db.Column(db.String(100) , unique= True , nullable = False)
-    slug        = db.Column(db.String(100))
     password    = db.Column(db.String(1000)  , nullable = False)
     html_bio    = db.Column(db.Text , nullable = True)
     name        = db.Column(db.String(100) , nullable = True)
@@ -42,7 +41,9 @@ class User(db.Model , UserMixin):
         self.name = name
         self.last_name = last_name
         
-        self.slug = slugify(username)
+    @property
+    def get_full_name(self):
+        return self.name  + " " + self.last_name
 
     def __repr__(self):
         return self.username
@@ -50,6 +51,14 @@ class User(db.Model , UserMixin):
     def get_id(self):
         return self._id
 
+VALID = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;="
+
+
+def has_valid_characters(username  : str):
+    for i in username:
+        if i not in VALID:
+            return False
+    return True
 
 
 
@@ -57,15 +66,6 @@ class User(db.Model , UserMixin):
 def load_user(user_id):
     return User.query.filter_by(_id = user_id).first()
 
-
-def slugify(text : str):
-
-    valid = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;="
-    new = ""
-    for i in text:
-        if i in valid:
-            new += i
-    return new
 
 
 ###VIEWS
@@ -89,6 +89,9 @@ def signup():
                 flash("یوزرنیم باید کمتر از 100 کاراکتر باشد جناپ")
             elif " " in username:
                 flash ("آقای محترم اسپیس نذارید توی نام کاربری")
+
+            elif not has_valid_characters(username):
+                flash("اقای محرتم!!!!!!!!!کاراکتر حرام؟؟")
             
             else:
 
@@ -168,6 +171,9 @@ def validation_endpoint():
     elif len(username) > 100:
         error = "زیادی بلنده اسکل"
 
+    elif not has_valid_characters(username):
+        error = "دوست عزیزم.یوزرنیم شما حاوی کاراکتر های خطرناک می باشد"
+
     elif " " in username:
         error = "اسپیس نذارید. جدی می باشم.😤 "
 
@@ -185,9 +191,9 @@ def validation_endpoint():
 
 
 
-@app.route("/<int:pk>/<slug>")
-def profile_view(pk , slug):
-    if User.query.filter_by(_id = pk).filter_by(slug = slug).first() != None:
+@app.route("/profile/<int:pk>/<username>")
+def profile_view(pk , username):
+    if User.query.filter_by(_id = pk).filter_by(username = username).first() != None:
         user = User.query.filter_by(_id = pk).first()
         return render_template("profile.html" , user = user)
     abort(404)
