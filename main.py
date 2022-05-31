@@ -1,11 +1,13 @@
 from datetime import datetime
-from flask import Flask, flash, jsonify, render_template , request , redirect, url_for
+from flask import Flask, flash, jsonify, render_template , request , redirect, url_for , abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin , login_user  , LoginManager , current_user
 from passlib.hash import sha256_crypt
 from flask_wtf.csrf import CSRFProtect
 import os
 from flask import send_from_directory
+
+
 
 
 
@@ -25,6 +27,7 @@ class User(db.Model , UserMixin):
 
     _id         = db.Column( db.Integer , primary_key = True)
     username    = db.Column(db.String(100) , unique= True , nullable = False)
+    slug        = db.Column(db.String(100))
     password    = db.Column(db.String(1000)  , nullable = False)
     html_bio    = db.Column(db.Text , nullable = True)
     name        = db.Column(db.String(100) , nullable = True)
@@ -38,6 +41,8 @@ class User(db.Model , UserMixin):
         self.html_bio = html_bio
         self.name = name
         self.last_name = last_name
+        
+        self.slug = slugify(username)
 
     def __repr__(self):
         return self.username
@@ -51,6 +56,17 @@ class User(db.Model , UserMixin):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter_by(_id = user_id).first()
+
+
+def slugify(text : str):
+
+    valid = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-._~:/?#[]@!$&'()*+,;="
+    new = ""
+    for i in text:
+        if i in valid:
+            new += i
+    return new
+
 
 ###VIEWS
 
@@ -73,29 +89,37 @@ def signup():
                 flash("یوزرنیم باید کمتر از 100 کاراکتر باشد جناپ")
             elif " " in username:
                 flash ("آقای محترم اسپیس نذارید توی نام کاربری")
+            
             else:
-                if  User.query.filter_by(username=username).first() != None:
-                    flash("یوزرنیم تکراری است اقای محترم")
+
+                for l in username:
+                    if ord(l) < 33 or ord(l) > 126:
+                        flash("یوزرنیم فارسی اقای محرتم")
+                        break
                 else:
-                    if not password == False and len(password) >= 8:
+
+                    if  User.query.filter_by(username=username).first() != None:
+                        flash("یوزرنیم تکراری است اقای محترم")
+                    else:
+                        if not password == False and len(password) >= 8:
+                            
+                            password = sha256_crypt.encrypt(password)
+                            user = User(username=username , password=password , name=name , last_name=last_name)
+                            db.session.add(user)
+                            db.session.commit()
+                            login_user(user)
+                            return redirect("/") 
                         
-                        password = sha256_crypt.encrypt(password)
-                        user = User(username=username , password=password , name=name , last_name=last_name)
-                        db.session.add(user)
-                        db.session.commit()
-                        login_user(user)
-                        return redirect("/") 
-                    
-                    if password == False:
-                        flash ("آقای محترم رمز خالی نباشه وگرنه")
-                    
-                    elif len(password) <= 8:
-                        flash("آقای محترم رمزتون باید بیشتر از 8 کارکتر باشه")
+                        if password == False:
+                            flash ("آقای محترم رمز خالی نباشه وگرنه")
+                        
+                        elif len(password) <= 8:
+                            flash("آقای محترم رمزتون باید بیشتر از 8 کارکتر باشه")
         else:
             flash("اقای محرتم یوزرنیم خالی نباشه وگرنه")
-            
-        
+                    
         return redirect(url_for("signup"))
+
 
     if request.method == "GET":
         return render_template("signup.html")
@@ -158,6 +182,17 @@ def validation_endpoint():
         "username_error" : error,
         "password_error" : password_error
     })
+
+
+
+@app.route("/<int:pk>/<slug>")
+def profile_view(pk , slug):
+    if User.query.filter_by(_id = pk).filter_by(slug = slug).first() != None:
+        user = User.query.filter_by(_id = pk).first()
+        return render_template("profile.html" , user = user)
+    abort(404)
+
+
 
 
 #errors ??
