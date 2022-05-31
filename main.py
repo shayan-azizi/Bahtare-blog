@@ -141,8 +141,11 @@ def validation_endpoint():
     password_error = ""
     if username == "":
         error = "اقای محترم چرا خالی؟"
-    if len(username) > 100:
+    elif len(username) > 100:
         error = "زیادی بلنده اسکل"
+
+    elif " " in username:
+        error = "اسپیس نذارید. جدی می باشم.😤 "
 
 
     if User.query.filter_by(username = username).first() != None:
