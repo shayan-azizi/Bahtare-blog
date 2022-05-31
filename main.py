@@ -20,7 +20,6 @@ csrf = CSRFProtect(app)
 csrf.init_app(app)
 
 
-
 ##MODELS
 class User(db.Model , UserMixin):
 
@@ -45,7 +44,6 @@ class User(db.Model , UserMixin):
     
     def get_id(self):
         return self._id
-
 
 
 
@@ -105,17 +103,26 @@ def signup():
 
 @app.route("/login" , methods= ["GET" , "POST"])
 def login():
-    
 
     if request.method == "POST":
-        
-        username = request.form.get("username" , False)
-        password = request.form.get("password" , False)
+        username = request.form.get("username")
+        password = request.form.get("password")
+        if User.query.filter_by(username=username).first() != None:
+            user = User.query.filter_by(username = username).first()
+            if sha256_crypt.verify(password, user.password):
+                login_user(user)
+                return redirect("/")
+            flash("اقای محترم پسسورد شما دارای ایراد است")
+            return redirect(url_for("login"))
+
+        flash("یوزرنیم در پایگاه داده یافت نشد")
+        return redirect(url_for("login"))
+            
 
 
-    elif request.method == "GET":
+
+    if request.method == "GET":
         return render_template("login.html")
-
 
 
 
