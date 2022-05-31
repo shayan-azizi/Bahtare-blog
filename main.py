@@ -49,6 +49,7 @@ class User(db.Model , UserMixin):
 
 
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.filter_by(_id = user_id).first()
@@ -125,23 +126,29 @@ def has_logged_in():
     })
     
 
-
 @app.route("/validation123" , methods = ["POST"])
 def validation_endpoint():
     username = request.form.get("username")
     password = request.form.get("password")
     error = ""
+    password_error = ""
     if username == "":
         error = "اقای محترم چرا خالی؟"
     if len(username) > 100:
         error = "زیادی بلنده اسکل"
 
+
     if User.query.filter_by(username = username).first() != None:
         error = "تکراریه اقای مترحم"
 
+    if len(password) < 8:
+        password_error = "اقای محترم چرا پسسورد کوتاه؟"
+
     return jsonify({
-        "error" : error
+        "username_error" : error,
+        "password_error" : password_error
     })
+
 
 #errors ??
 @app.errorhandler(404)
@@ -158,6 +165,7 @@ def page_not_found (e):
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 
 
