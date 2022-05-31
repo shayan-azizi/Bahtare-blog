@@ -7,4 +7,4 @@ daily p commit:
 day 1 : p
 <br>
 daily p commit:
-day 2: p
+day 2 : p
