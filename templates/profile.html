@@ -1,10 +1,53 @@
-<html>
-
-    <h1>
-
-            {{user['username']}}
-
-    </h1>
+{% extends 'base.html' %}
 
 
-</html>
+{% block header %}
+
+<link rel="stylesheet" href="{{ url_for('static' , filename = 'css/profile.css') }}">
+<title>{{ user.username }}</title>
+
+{% endblock %}
+
+
+{% block body %}
+    
+
+{% include 'navbar.html' %}
+
+
+    <div class="wrapper">
+
+        <div class="card">
+
+          <div class="card__header"></div>
+
+          <div class="card__image card__image-geoff"></div>
+
+          <div class="card__info">
+            <div class="details">
+              <span class="details__text-header">{{user.name}} &nbsp; {{ user.last_name }}</span>
+              <span class="details__text-subheader">قیمت همون موقع تو ترب</span>
+            </div>
+            <div class="card__info__section-3">
+              <div class="details-bottom">
+                <span class="details__number">25k</span>
+                <span class="details__text">دوست</span>
+              </div>
+            </div>
+            <div class="card__info__section-3">
+              <div class="details-bottom">
+                <span class="details__number">3.5</span>
+                <span class="details__text">دوست مورد علاقه</span>
+              </div>
+            </div>
+            <div class="card__info__section-3">
+              <div class="details-bottom">
+                <span class="details__number">16k</span>
+                <span class="details__text">پست</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+{% endblock %}
