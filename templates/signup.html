@@ -24,34 +24,52 @@
       
       <input class="inputs" id="username" name="username" onchange="validate();" placeholder="نام کاربری" type="text" value="">
 
+      <div style = "    background-color: #ddd294;
+      color: red;
+      border-radius: 5px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      margin-bottom: 10px;" class="osk">
+        <p>سلام</p>
+      </div>
+
       <input class="inputs" id="name" name="name" placeholder="نام" type="text" value="">
 
       <input class="inputs" id="fname" name="last_name" placeholder="نام خانوادگی" type="text" value="">
 
       <input class="inputs" id="password" name="password" onchange="validate();" placeholder="رمز" type="password" value="">
 
+      <div style = "    background-color: #ddd294;
+      color: red;
+      border-radius: 5px;
+      box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+      margin-bottom: 10px;" class="osk">
+        <p>سلام</p>
+      </div>
+
       <br>
 
     </div>
-    <br>
-    <br>
+
     <div class="submitdiv">
       <input type="submit" value="ثبت نام" class="submitbtn">
     </div>
     <br>
     <br>
+
+
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+                <p class="alert-danger">
+                    {{message}}
+                </p>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    {% endwith %}
     <div class="footer">
-        {% with messages = get_flashed_messages() %}
-            {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <p class="alert-danger">
-                        {{message}}
-                    </p>
-                {% endfor %}
-            </ul>
-            {% endif %}
-        {% endwith %}
     <p id = "parent-acc">اکانت داری؟ <a href="{{ url_for('login') }}" class="signupbtn">الان ورود کن!</a></p>
     </div>
 
